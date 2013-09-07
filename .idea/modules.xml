@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Personalikeys/Personalikeys.iml" filepath="$PROJECT_DIR$/Personalikeys/Personalikeys.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Personalikeys.iml" filepath="$PROJECT_DIR$/Personalikeys.iml" />
       <module fileurl="file://$PROJECT_DIR$/Personalikeys/Personalikeys-Personalikeys.iml" filepath="$PROJECT_DIR$/Personalikeys/Personalikeys-Personalikeys.iml" />
     </modules>
   </component>

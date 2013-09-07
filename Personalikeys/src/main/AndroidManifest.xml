@@ -1,43 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pennapps.personalikeys"
-    android:versionCode="1"
-    android:versionName="1.0" >
-
-    <uses-sdk
-        android:minSdkVersion="7"
-        android:targetSdkVersion="16" />
-
-    <application
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="Personalikeys"
-        android:theme="@style/AppTheme" >
-        <activity
-            android:name="com.pennapps.personalikeys.MainActivity"
-            android:label="Personalikeys" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <!-- Declares the input method service -->
-        <!-- Optional: an activity for controlling the IME settings -->
-        <activity android:name="FastInputIMESettings"
-                  android:label="@string/fast_input_settings">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-            </intent-filter>
-        </activity>
-        <service android:name="FastInputIME"
-                 android:label="%s fast_input_label"
-                 android:permission="android.permission.BIND_INPUT_METHOD">
+<android:manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        package="com.example.android.softkeyboard">
+    <application android:label="Sample_Keyboard">
+        <service android:name="SoftKeyboard"
+                android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>
                 <action android:name="android.view.InputMethod" />
             </intent-filter>
             <meta-data android:name="android.view.im" android:resource="@xml/method" />
         </service>
-    </application>
 
-</manifest>
+        <activity android:name=".ImePreferences" android:label="Sample_Keyboard Settings">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+
+    </application>
+</android:manifest>
