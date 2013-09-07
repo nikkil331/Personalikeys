@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -140,6 +142,28 @@ public class TextDataOpenHelper extends SQLiteOpenHelper{
     	    super.close();
  
 	}
+    
+    public void addRow(ContentValues values){
+    	if(myDataBase != null){
+    		 myDataBase.insert("ScoredInput", null, values);
+    	}
+
+    }
+    
+    public double[] getScores() throws Exception{
+    	if(myDataBase != null){
+    		String[] columns = {"pos_p", "neg_p", "pos_e", "neg_e", "pos_r", "neg_r", "pos_m", "neg_m", "pos_a", "neg_a", "pos_swl", "neg_swl"};
+    		Cursor response = myDataBase.query("ScoredInput", columns, "_id=1", new String[0], "", "", "");
+    		double[] scores = new double[response.getColumnCount()];
+    		for(int i = 0; i < scores.length; i++){
+    			scores[i] = response.getDouble(i);
+    		}
+    		return scores;
+    	}
+    	else{
+    		throw new Exception("Database not opened");
+    	}
+    }
  
         // Add your public helper methods to access and get content from the database.
        // You could return cursors by doing "return myDataBase.query(....)" so it'd be easy

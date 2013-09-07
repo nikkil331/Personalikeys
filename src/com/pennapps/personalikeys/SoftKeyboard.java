@@ -139,6 +139,7 @@ public class SoftKeyboard extends InputMethodService
      * about the target of our edits.
      */
     @Override public void onStartInput(EditorInfo attribute, boolean restarting) {
+    	System.out.println("started");
         super.onStartInput(attribute, restarting);
         
         // Reset our state.  We want to do this even if restarting, because
@@ -231,14 +232,15 @@ public class SoftKeyboard extends InputMethodService
      */
     @Override public void onFinishInput() {
         super.onFinishInput();
-        
+        System.out.println("ended");
         String textEntry = mComposing.toString();
+        System.out.println(textEntry);
         dbHelper.openDataBase();
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues newRow = new ContentValues();
         newRow.put("Input", textEntry);
         newRow.put("isScored", 0);
-        db.insert("TextData", null, newRow);
+        dbHelper.addRow(newRow);
+        dbHelper.close();
         
         // Clear current composing text and candidates.
         mComposing.setLength(0);

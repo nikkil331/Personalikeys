@@ -1,9 +1,12 @@
-# view AndroidManifest.xml #generated:13
+# view AndroidManifest.xml #generated:19
 -keep class com.pennapps.personalikeys.ImePreferences { <init>(...); }
 
 # view res/layout/input.xml #generated:21
 -keep class com.pennapps.personalikeys.LatinKeyboardView { <init>(...); }
 
 # view AndroidManifest.xml #generated:5
+-keep class com.pennapps.personalikeys.Personalikeys { <init>(...); }
+
+# view AndroidManifest.xml #generated:11
 -keep class com.pennapps.personalikeys.SoftKeyboard { <init>(...); }
 
