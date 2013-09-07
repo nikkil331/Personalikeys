@@ -16,6 +16,8 @@
 
 package com.pennapps.personalikeys;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
@@ -75,6 +77,8 @@ public class SoftKeyboard extends InputMethodService
     private LatinKeyboard mCurKeyboard;
     
     private String mWordSeparators;
+    
+    private TextDataOpenHelper dbHelper = new TextDataOpenHelper(getApplicationContext());
     
     /**
      * Main initialization of the input method component.  Be sure to call
@@ -227,6 +231,14 @@ public class SoftKeyboard extends InputMethodService
      */
     @Override public void onFinishInput() {
         super.onFinishInput();
+        
+        String textEntry = mComposing.toString();
+        dbHelper.openDataBase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues newRow = new ContentValues();
+        newRow.put("Input", textEntry);
+        newRow.put("isScored", 0);
+        db.insert("TextData", null, newRow);
         
         // Clear current composing text and candidates.
         mComposing.setLength(0);
