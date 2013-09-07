@@ -1,1 +1,1 @@
-include ':Personalikeys'
+include ':Personalikeys', ':personalikeys'
