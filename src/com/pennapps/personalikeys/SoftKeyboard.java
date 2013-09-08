@@ -246,6 +246,18 @@ public class SoftKeyboard extends InputMethodService
         ContentValues newRow = new ContentValues();
         newRow.put("Input", textEntry);
         newRow.put("isScored", 0);
+        newRow.put("pos_p", 0);
+        newRow.put("neg_p", 1);
+        newRow.put("pos_e", 0);
+        newRow.put("neg_e", 1);
+        newRow.put("pos_r", 0);
+        newRow.put("neg_r", 1);
+        newRow.put("pos_m", 0);
+        newRow.put("neg_m", 1);
+        newRow.put("pos_a", 0);
+        newRow.put("neg_a", 1);
+        newRow.put("pos_swl", 0);
+        newRow.put("neg_swl", 1);
         dbHelper.addRow(newRow);
         dbHelper.close();
         

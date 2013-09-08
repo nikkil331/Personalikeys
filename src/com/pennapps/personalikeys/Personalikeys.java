@@ -18,29 +18,35 @@ public class Personalikeys extends Activity {
 		try {
 			dbHelper.createDataBase();
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			throw new Error("database failed to open");
 		}
 		dbHelper.openDataBaseRead();
 		try {
 			scores = dbHelper.getScores();
+			
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new Error("failed to get scores");
 		}
 		dbHelper.close();
 		
-		TextView p_text = (TextView) findViewById(R.id.textView8);
-		TextView e_text = (TextView) findViewById(R.id.textView9);
-		TextView r_text = (TextView) findViewById(R.id.textView10);
-		TextView m_text = (TextView) findViewById(R.id.textView11);
-		TextView a_text = (TextView) findViewById(R.id.textView12);
-		TextView swl_text = (TextView) findViewById(R.id.textView13);
+		setContentView(R.layout.activity_personalikeys);
 		
+		TextView p_text = (TextView) findViewById(R.id.textView6);
+		TextView e_text = (TextView) findViewById(R.id.textView7);
+		TextView r_text = (TextView) findViewById(R.id.textView8);
+		TextView m_text = (TextView) findViewById(R.id.textView9);
+		TextView a_text = (TextView) findViewById(R.id.textView10);
+		TextView swl_text = (TextView) findViewById(R.id.textView11);
+		
+		if(p_text == null) throw new Error("text view is null");
 		p_text.setText(String.valueOf(scores[0] - scores[1]));
 		e_text.setText(String.valueOf(scores[2] - scores[3]));
 		r_text.setText(String.valueOf(scores[4] - scores[5]));
 		m_text.setText(String.valueOf(scores[6] - scores[7]));
 		a_text.setText(String.valueOf(scores[8] - scores[9]));
 		swl_text.setText(String.valueOf(scores[10] - scores[11]));
+		
+		
 		
 	}
 	

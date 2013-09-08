@@ -76,8 +76,8 @@ public class TextDataOpenHelper extends SQLiteOpenHelper{
     	SQLiteDatabase checkDB = null;
  
     	try{
-    		String myPath = DB_PATH + DB_NAME;
-    		checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+    		File filePath = wrapper.getDatabasePath("TextData");
+    		checkDB = SQLiteDatabase.openDatabase(filePath.getAbsolutePath(), null, SQLiteDatabase.OPEN_READONLY);
  
     	}catch(SQLiteException e){
  
@@ -156,14 +156,15 @@ public class TextDataOpenHelper extends SQLiteOpenHelper{
  
     	//Open the database
         File filePath = wrapper.getDatabasePath("TextData");
-    	myDataBase = SQLiteDatabase.openDatabase(filePath.toString(), null, SQLiteDatabase.OPEN_READONLY);
+    	myDataBase = SQLiteDatabase.openDatabase(filePath.getAbsolutePath(), null, SQLiteDatabase.OPEN_READONLY);
+    	if(myDataBase == null) throw new Error(filePath.getAbsolutePath());
  
     }
     
     public void openDataBaseWrite() throws SQLException{
     	//Open the database
         File filePath = wrapper.getDatabasePath("TextData");
-    	myDataBase = SQLiteDatabase.openDatabase(filePath.toString(), null, SQLiteDatabase.OPEN_READWRITE);
+    	myDataBase = SQLiteDatabase.openDatabase(filePath.getAbsolutePath(), null, SQLiteDatabase.OPEN_READWRITE);
     }
  
     @Override
@@ -183,7 +184,7 @@ public class TextDataOpenHelper extends SQLiteOpenHelper{
 
     }
     
-    public double[] getScores() throws Exception{
+    public double[] getScores(){
     	if(myDataBase != null){
     		String[] columns = {"pos_p", "neg_p", "pos_e", "neg_e", "pos_r", "neg_r", "pos_m", "neg_m", "pos_a", "neg_a", "pos_swl", "neg_swl"};
     		Cursor response = myDataBase.query("ScoredInput", columns, "_id=1", new String[0], "", "", "");
@@ -194,7 +195,7 @@ public class TextDataOpenHelper extends SQLiteOpenHelper{
     		return scores;
     	}
     	else{
-    		throw new Exception("Database not opened");
+    		throw new Error("database is null");
     	}
     }
  
