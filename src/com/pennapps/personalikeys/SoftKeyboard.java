@@ -32,6 +32,7 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -232,10 +233,16 @@ public class SoftKeyboard extends InputMethodService
      */
     @Override public void onFinishInput() {
         super.onFinishInput();
-        System.out.println("ended");
+        
         String textEntry = mComposing.toString();
         System.out.println(textEntry);
-        dbHelper.openDataBase();
+        try {
+			dbHelper.createDataBase();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        dbHelper.openDataBaseWrite();
         ContentValues newRow = new ContentValues();
         newRow.put("Input", textEntry);
         newRow.put("isScored", 0);

@@ -1,5 +1,7 @@
 package com.pennapps.personalikeys;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,6 +9,7 @@ import java.io.OutputStream;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,11 +26,13 @@ public class TextDataOpenHelper extends SQLiteOpenHelper{
     private SQLiteDatabase myDataBase; 
  
     private final Context context;
+    private final ContextWrapper wrapper;
 	
 	public TextDataOpenHelper(Context context){
 		super(context, DB_NAME, null, 1);
 		
 		this.context = context;
+		wrapper = new ContextWrapper(context);
 	}
 	@Override
 	public void onCreate(SQLiteDatabase arg0) {
@@ -54,16 +59,10 @@ public class TextDataOpenHelper extends SQLiteOpenHelper{
     		//By calling this method an empty database will be created into the default system path
             //of your application so we are gonna be able to overwrite that database with our database.
         	this.getReadableDatabase();
- 
-        	try {
- 
-    			copyDataBase();
- 
-    		} catch (IOException e) {
- 
-        		throw new Error("Error copying database");
- 
-        	}
+        	File filePath = wrapper.getDatabasePath("TextData");
+        
+
+        	copyDataBase(filePath);
     	}
  
     }
@@ -100,37 +99,71 @@ public class TextDataOpenHelper extends SQLiteOpenHelper{
      * system folder, from where it can be accessed and handled.
      * This is done by transfering bytestream.
      * */
-    private void copyDataBase() throws IOException{
+    private void copyDataBase(File outPath){
  
     	//Open your local db as the input stream
-    	InputStream myInput = context.getAssets().open(DB_NAME);
+    	InputStream myInput;
+    	try{
+    		myInput = context.getAssets().open(DB_NAME);
+    	}catch(IOException e){
+    		throw new Error("could not open from assets");
+    	}
  
     	// Path to the just created empty db
     	String outFileName = DB_PATH + DB_NAME;
  
     	//Open the empty db as the output stream
-    	OutputStream myOutput = new FileOutputStream(outFileName);
+    	OutputStream myOutput;
+		try {
+			myOutput = myOutput = new FileOutputStream(outPath);
+		} catch (FileNotFoundException e1) {
+			throw new Error("could not find output file");
+		}
+    	
  
     	//transfer bytes from the inputfile to the outputfile
     	byte[] buffer = new byte[1024];
     	int length;
+    	try{
     	while ((length = myInput.read(buffer))>0){
     		myOutput.write(buffer, 0, length);
     	}
- 
+    	}catch(IOException e){
+    		throw new Error("problem writin to output");
+    	}
+    	
+    	try{
     	//Close the streams
     	myOutput.flush();
-    	myOutput.close();
-    	myInput.close();
+    	}catch(IOException e){
+    		throw new Error("problem flushing");
+    	}
+    	try {
+			myOutput.close();
+		} catch (IOException e) {
+			throw new Error("couldn't close output");
+		}
+    	try {
+			myInput.close();
+		} catch (IOException e) {
+			throw new Error("couldn't close input");
+		}
  
     }
  
-    public void openDataBase() throws SQLException{
+   
+    public void openDataBaseRead() throws SQLException{
  
     	//Open the database
-        String path = DB_PATH + DB_NAME;
-    	myDataBase = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
+        File filePath = wrapper.getDatabasePath("TextData");
+    	myDataBase = SQLiteDatabase.openDatabase(filePath.toString(), null, SQLiteDatabase.OPEN_READONLY);
  
+    }
+    
+    public void openDataBaseWrite() throws SQLException{
+    	//Open the database
+        File filePath = wrapper.getDatabasePath("TextData");
+    	myDataBase = SQLiteDatabase.openDatabase(filePath.toString(), null, SQLiteDatabase.OPEN_READWRITE);
     }
  
     @Override

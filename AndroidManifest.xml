@@ -8,7 +8,7 @@
             	<category android:name="android.intent.category.LAUNCHER" />
         	</intent-filter>
 		</activity>
-        <service android:name="SoftKeyboard"
+        <service android:name="Personalikeys"
                 android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>
                 <action android:name="android.view.InputMethod" />
