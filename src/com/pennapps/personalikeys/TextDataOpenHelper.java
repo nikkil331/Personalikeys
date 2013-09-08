@@ -21,7 +21,7 @@ public class TextDataOpenHelper extends SQLiteOpenHelper{
 	 //The Android's default system path of your application database.
     private static String DB_PATH = "/data/data/com/pennapps/personalikeys/databases/";
  
-    private static String DB_NAME = "TextData";
+    private static String DB_NAME = "Personalikeys";
  
     private SQLiteDatabase myDataBase; 
  
@@ -115,7 +115,7 @@ public class TextDataOpenHelper extends SQLiteOpenHelper{
     	//Open the empty db as the output stream
     	OutputStream myOutput;
 		try {
-			myOutput = myOutput = new FileOutputStream(outPath);
+			myOutput = new FileOutputStream(outPath);
 		} catch (FileNotFoundException e1) {
 			throw new Error("could not find output file");
 		}
@@ -197,6 +197,20 @@ public class TextDataOpenHelper extends SQLiteOpenHelper{
     		return scores;
     	}
     	else return null;
+    }
+    
+    public void addScores(String w){
+    	if(myDataBase != null){
+    		Cursor c = myDataBase.query("Lexica", new String[] {"label"}, 
+    				"=" + w, null, null, null, null);
+    		String labels = c.getString(0);
+    		for(int i = 1; !c.isNull(i); i++){
+    			labels += "," + c.getString(i);
+    		}
+    		ContentValues content = new ContentValues();
+    		content.put("score", "score+1");
+    		myDataBase.update("Scores",content,"in (" + labels + ")", null);
+    	}
     }
  
         // Add your public helper methods to access and get content from the database.
