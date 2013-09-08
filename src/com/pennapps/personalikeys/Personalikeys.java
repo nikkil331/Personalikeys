@@ -19,8 +19,8 @@ public class Personalikeys extends Activity {
 	TextDataOpenHelper dbHelper = new TextDataOpenHelper(Personalikeys.this);
 	
 	@Override
-	public void onCreate(Bundle bundle) {
-		super.onCreate(bundle);
+	public void onStart() {
+		super.onStart();
 		try {
 			dbHelper.createDataBase();
 		} catch (IOException e1) {
@@ -53,8 +53,6 @@ public class Personalikeys extends Activity {
 		m_text.setText(String.valueOf(m));
 		a_text.setText(String.valueOf(a));
 		swl_text.setText(String.valueOf(swl));
-		
-		
 		
 	}
 	
