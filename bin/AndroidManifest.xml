@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" 
         package="com.pennapps.personalikeys">
-    <uses-sdk android:minSdkVersion="11"/>
+    <uses-sdk android:minSdkVersion="18" android:targetSdkVersion="18"/>
     <application android:label="@string/ime_name">
 		<activity android:name="com.pennapps.personalikeys.Personalikeys">
 		    <intent-filter>
@@ -8,7 +8,7 @@
             	<category android:name="android.intent.category.LAUNCHER" />
         	</intent-filter>
 		</activity>
-        <service android:name="SoftKeyboard"
+        <service android:name="Personalikeys"
                 android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>
                 <action android:name="android.view.InputMethod" />

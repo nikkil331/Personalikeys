@@ -1,12 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-       	xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="128dp"
-        android:paddingRight="128dp"
-        android:paddingTop="128dp"
-        android:paddingBottom="128dp"
-        tools:context="Personalikeys">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="Personalikeys" >
 
     <TextView
         android:id="@+id/textView7"
@@ -39,17 +35,6 @@
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="25sp" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:text="PERMA Score"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="45sp" />
 
     <TextView
         android:id="@+id/textView2"
@@ -150,5 +135,16 @@
         android:text="Life Satisfaction"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/textView10"
+        android:layout_marginTop="37dp"
+        android:text="PERMA Score"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="45sp" />
 
 </RelativeLayout>

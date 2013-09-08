@@ -187,16 +187,16 @@ public class TextDataOpenHelper extends SQLiteOpenHelper{
     public double[] getScores(){
     	if(myDataBase != null){
     		String[] columns = {"pos_p", "neg_p", "pos_e", "neg_e", "pos_r", "neg_r", "pos_m", "neg_m", "pos_a", "neg_a", "pos_swl", "neg_swl"};
-    		Cursor response = myDataBase.query("ScoredInput", columns, "_id=1", new String[0], "", "", "");
+    		Cursor response = myDataBase.query("ScoredInput", columns, "", new String[0], "", "", "");
+    		if(response.getColumnCount() == 0) return new double[0];
     		double[] scores = new double[response.getColumnCount()];
+    		response.moveToPosition(0);
     		for(int i = 0; i < scores.length; i++){
     			scores[i] = response.getDouble(i);
     		}
     		return scores;
     	}
-    	else{
-    		throw new Error("database is null");
-    	}
+    	else return null;
     }
  
         // Add your public helper methods to access and get content from the database.
