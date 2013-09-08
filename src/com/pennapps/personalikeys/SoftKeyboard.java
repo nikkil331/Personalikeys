@@ -80,6 +80,7 @@ public class SoftKeyboard extends InputMethodService
     private String mWordSeparators;
     
     private TextDataOpenHelper dbHelper = new TextDataOpenHelper(getApplicationContext());
+    private ScoreAggregator ngrams = new ScoreAggregator();
     
     /**
      * Main initialization of the input method component.  Be sure to call
@@ -235,31 +236,14 @@ public class SoftKeyboard extends InputMethodService
         super.onFinishInput();
         
         String textEntry = mComposing.toString();
-        System.out.println(textEntry);
-        try {
-			dbHelper.createDataBase();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        dbHelper.openDataBaseWrite();
-        ContentValues newRow = new ContentValues();
-        newRow.put("Input", textEntry);
-        newRow.put("isScored", 0);
-        newRow.put("pos_p", 0);
-        newRow.put("neg_p", 1);
-        newRow.put("pos_e", 0);
-        newRow.put("neg_e", 1);
-        newRow.put("pos_r", 0);
-        newRow.put("neg_r", 1);
-        newRow.put("pos_m", 0);
-        newRow.put("neg_m", 1);
-        newRow.put("pos_a", 0);
-        newRow.put("neg_a", 1);
-        newRow.put("pos_swl", 0);
-        newRow.put("neg_swl", 1);
-        dbHelper.addRow(newRow);
-        dbHelper.close();
+        ngrams.setString(textEntry);
+        while(ngrams.one_iter.hasNext()){
+        	dbHelper.addScores(ngrams.one_iter.next());
+        }
+        while(ngrams.two_iter.hasNext()){
+        	dbHelper.addScores(ngrams.two_iter.next());
+        }
+        
         
         // Clear current composing text and candidates.
         mComposing.setLength(0);

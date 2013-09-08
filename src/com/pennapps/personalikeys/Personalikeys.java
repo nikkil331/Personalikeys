@@ -9,7 +9,13 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class Personalikeys extends Activity {
-	double[] scores;
+	int p;
+	int e;
+	int r;
+	int m;
+	int a;
+	int swl;
+	
 	TextDataOpenHelper dbHelper = new TextDataOpenHelper(Personalikeys.this);
 	
 	@Override
@@ -21,11 +27,17 @@ public class Personalikeys extends Activity {
 			throw new Error("database failed to open");
 		}
 		dbHelper.openDataBaseRead();
-		scores = dbHelper.getScores();
+		
+		p = dbHelper.getScore("p");
+		e = dbHelper.getScore("e");
+		r = dbHelper.getScore("r");
+		m = dbHelper.getScore("m");
+		a = dbHelper.getScore("a");
+		swl = dbHelper.getScore("swl");
 		
 		dbHelper.close();
 		
-		setContentView(R.layout.activity_sample2);
+		setContentView(R.layout.activity_personalikeys);
 		
 		TextView p_text = (TextView) findViewById(R.id.textView6);
 		TextView e_text = (TextView) findViewById(R.id.textView7);
@@ -35,12 +47,12 @@ public class Personalikeys extends Activity {
 		TextView swl_text = (TextView) findViewById(R.id.textView11);
 		
 		if(p_text == null) throw new Error("text view is null");
-		p_text.setText(String.valueOf(Math.round(scores[0] - scores[1])));
-		e_text.setText(String.valueOf(Math.round(scores[2] - scores[3])));
-		r_text.setText(String.valueOf(Math.round(scores[4] - scores[5])));
-		m_text.setText(String.valueOf(Math.round(scores[6] - scores[7])));
-		a_text.setText(String.valueOf(Math.round(scores[8] - scores[9])));
-		swl_text.setText(String.valueOf(Math.round(scores[10] - scores[11])));
+		p_text.setText(String.valueOf(p));
+		e_text.setText(String.valueOf(e));
+		r_text.setText(String.valueOf(r));
+		m_text.setText(String.valueOf(m));
+		a_text.setText(String.valueOf(a));
+		swl_text.setText(String.valueOf(swl));
 		
 		
 		

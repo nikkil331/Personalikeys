@@ -5,14 +5,23 @@ import java.util.StringTokenizer;
 
 
 public class ScoreAggregator {
-	NgramIterator two_iter;
-	NgramIterator one_iter;
+	public NgramIterator two_iter;
+	public NgramIterator one_iter;
 	
 	public ScoreAggregator(String s){
 		one_iter = new NgramIterator(1, s);
 		two_iter = new NgramIterator(2, s);
 	}
-	private static class NgramIterator implements Iterator<String> {
+	
+	public ScoreAggregator(){
+	}
+	
+	public void setString(String s){
+		one_iter = new NgramIterator(1, s);
+		two_iter = new NgramIterator(2, s);
+	}
+	
+	public static class NgramIterator implements Iterator<String> {
 
 	    String[] words;
 	    int pos = 0, n;
